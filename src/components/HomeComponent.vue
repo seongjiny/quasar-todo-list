@@ -33,8 +33,11 @@
         </div>
       </q-card-section>
     </q-card>
+    <div class="clear-button">
+      <q-btn text-color="negative" @click="clearAll()">Clear All</q-btn>
+    </div>
   </div>
-
+  <!-- Modal area -->
   <q-dialog v-model="showModal">
     <q-card class="my-card">
       <q-card-section class="q-pt-xl">
@@ -56,11 +59,13 @@
 import { ref } from 'vue';
 
 const newItem = ref('');
+const showModal = ref(false);
 const todos = ref(['abc', 'def']);
+
 const deleteItem = (i: number) => {
   todos.value.splice(i, 1);
 };
-const showModal = ref(false);
+
 const addItem = () => {
   if (newItem.value == '') {
     showModal.value = true;
@@ -68,6 +73,10 @@ const addItem = () => {
     todos.value.push(newItem.value);
     newItem.value = '';
   }
+};
+
+const clearAll = () => {
+  todos.value = [];
 };
 </script>
 
@@ -116,5 +125,12 @@ h3 {
       box-shadow: none;
     }
   }
+}
+
+.clear-button {
+  margin-top: 20px;
+  display: flexbox;
+  width: 100%;
+  text-align: center;
 }
 </style>
