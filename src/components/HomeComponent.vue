@@ -56,27 +56,35 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import firebase from 'firebase/compat/app';
 
+const todoRef = firebase.database().ref('data/').child('todo');
 const newItem = ref('');
 const showModal = ref(false);
-const todos = ref(['abc', 'def']);
+const todos = ref([] as string[]);
 
-const deleteItem = (i: number) => {
-  todos.value.splice(i, 1);
+onMounted(() => {
+  todoRef.on('value', (sn) => {
+    todos.value = sn.val();
+  });
+});
+
+const deleteItem = (i: string) => {
+  todoRef.child(i).remove();
 };
 
 const addItem = () => {
   if (newItem.value == '') {
     showModal.value = true;
   } else {
-    todos.value.push(newItem.value);
+    todoRef.push(newItem.value);
     newItem.value = '';
   }
 };
 
 const clearAll = () => {
-  todos.value = [];
+  todoRef.remove();
 };
 </script>
 
