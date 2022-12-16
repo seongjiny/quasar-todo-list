@@ -16,7 +16,6 @@
           @click="addItem()"
           class="add-btn"
           icon="add"
-          stack
           glossy
           color="purple"
         />
@@ -29,7 +28,7 @@
           {{ todo }}
         </div>
         <div class="card-right-div col">
-          <q-btn @click="deleteItem(i)" icon="delete" />
+          <q-btn @click="deleteItem(i + '')" icon="delete" />
         </div>
       </q-card-section>
     </q-card>
